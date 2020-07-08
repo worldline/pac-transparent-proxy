@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    tags-ignore: ['**']
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Check out code
+      uses: actions/checkout@v2
+    
+    # Download & install go
+    - name: Install go
+      uses: actions/setup-go@v2
+
+    # Build application
+    - name: Build
+      run: |
+        export VERSION=$(echo ${GITHUB_REF} | grep -o -P '[^/]+$' || echo ${GITHUB_SHA})
+        echo "build version: ${VERSION}"
+        make build
+
+    # Retrieve release URL
+    - name: Get Release
+      if: github.event_name == 'release'
+      id: get_release_url
+      uses: bruceadams/get-release@v1.2.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Upload asset
+    - name: Upload Release Asset
+      if: github.event_name == 'release'
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.get_release_url.outputs.upload_url }}
+        asset_path: ./pac-transparent-proxy
+        asset_name: pac-transparent-proxy
+        asset_content_type: application/x-executable
