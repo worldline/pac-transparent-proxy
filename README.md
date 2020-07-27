@@ -19,7 +19,7 @@ GLOBAL OPTIONS:
 ## Install
 ### Download
 ```sh
-sudo curl -L -o /usr/bin/pac-transparent-proxy https://github.com/yodeyer/pac-transparent-proxy/releases/latest/download/pac-transparent-proxy
+sudo curl -L -o /usr/bin/pac-transparent-proxy https://github.com/worldline/pac-transparent-proxy/releases/latest/download/pac-transparent-proxy
 sudo chmod +x /usr/bin/pac-transparent-proxy
 ```
 
