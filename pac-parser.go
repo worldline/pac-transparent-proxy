@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 	"sync"
 	"time"
 
@@ -100,6 +101,9 @@ func (p *pacParser) refreshPacFile() (interface{}, error) {
 		p.lastError = nil
 		return p.pool, nil
 	}
+
+	// Remove invalid UTF-8 characters
+	pacFileContent = []byte(strings.ToValidUTF8(string(pacFileContent), ""))
 
 	// Parse PAC file
 	parser, err := p.createPacParserInstance(pacFileContent)

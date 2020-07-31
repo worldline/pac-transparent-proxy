@@ -9,6 +9,6 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/urfave/cli/v2 v2.2.0
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
-	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae
+	golang.org/x/sys v0.0.0-20200728102440-3e129f6d46b1
 	gopkg.in/sourcemap.v1 v1.0.5 // indirect
 )
